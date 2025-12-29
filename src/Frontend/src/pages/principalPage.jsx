@@ -42,13 +42,11 @@ const Principal = () => {
                 
             var salidaS = await response.json();
             console.log(salidaS)
-            salidas.output = salidaS
-            setSalidas(salidaS.data)
+            setSalidas({output: salidaS.data})
             
         } 
         catch (ex) {
             console.log(`Error: ${ex}`)
-            alert(ex)
         }
         
     }

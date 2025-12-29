@@ -2,6 +2,7 @@ package main
 
 import (
 	"Proyecto/comandos/controllers"
+	general "Proyecto/comandos/generales"
 	"fmt"
 	"net/http"
 
@@ -18,13 +19,23 @@ func main() {
 	//======================= RUTAS =====================
 
 	//http://localhost:3000/GoDisk/commands
-	handler := RecoverMiddleware(c.Handler(mux))
 	mux.HandleFunc(""+fmt.Sprintf("%v", ruta)+"/commands", controllers.HandleCommand)
+	// mux.HandleFunc("/login", handleLogin)
+	// mux.HandleFunc("/logout", handleLogout)
+	// mux.HandleFunc("/obtainmbr", handleObtainMBR)
+	// mux.HandleFunc("/reportesobtener", handleReportsObtener)
+	// mux.HandleFunc("/graphs", handleGraph)
+	// mux.HandleFunc("/obtain-carpetas-archivos", handleObtainCarpetasArchivos)
+	// mux.HandleFunc("/cat", handleCat)
 
+	handler := RecoverMiddleware(c.Handler(mux))
+
+	//======================= INICIAR SERVIDOR =====================
 	fmt.Println("" + fmt.Sprintf("Backend corriendo en puerto: %v", puerto)) //-------> puerto corriendo
+	general.CrearCarpeta()
 	fmt.Println("" + fmt.Sprintf("Ruta principal: localHost:3000%v", ruta))
 
-	//error al iniciar
+	//======================= ERROR AL INICIAR SERVIDOR =====================
 	err := http.ListenAndServe(":"+fmt.Sprintf("%v", puerto), handler)
 	if err != nil {
 		color.Red("Error al iniciar el sevidor", err)
